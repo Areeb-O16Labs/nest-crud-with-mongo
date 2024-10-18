@@ -14,7 +14,7 @@ export class CatsService {
         // return this.cats;
     }
 
-    async create(cat: { id: number; name: string }): Promise<Cat> {
+    async create(cat: { id: string; name: string }): Promise<Cat> {
         if(cat.name == undefined) {
             return null;
         }
@@ -26,13 +26,13 @@ export class CatsService {
         return newCat.save();
     }
 
-    async findOne(id: number): Promise<Cat> {
+    async findOne(id: string): Promise<Cat> {
         const findCat = this.catModel.findOne({ _id: id }).exec();
         // let findCat = this.cats.find(cat => cat.id == id);
         return findCat;
     }
 
-    async update(id: number, cat: { id: number; name: string }): Promise<Cat> {
+    async update(id: string, cat: { id: string; name: string }): Promise<Cat> {
         // let findCat = this.cats.find(cat => cat.id == id);
         // if(findCat) {
         //     findCat.name = cat.name;
@@ -42,7 +42,7 @@ export class CatsService {
         return findCat;
     }
 
-    async delete(id: number): Promise<Cat> {
+    async delete(id: string): Promise<Cat> {
         // let findCat = this.cats.findIndex(cat => cat.id == id);
         // if(findCat != -1) {
         //     // this.cats.splice(findCat, 1);

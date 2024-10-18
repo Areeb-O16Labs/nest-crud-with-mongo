@@ -9,8 +9,11 @@ import {
 } from '@nestjs/common';
 import { OwnerService } from './owner.service';
 import { Response } from 'express';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('owner')
+@ApiTags('owner')
+
 export class OwnerController {
   constructor(private readonly ownerService: OwnerService) {}
 

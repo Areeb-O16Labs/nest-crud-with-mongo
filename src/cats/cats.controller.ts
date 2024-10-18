@@ -14,8 +14,11 @@ import {
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { Response } from 'express';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('cats')
+@ApiTags('cats')
+
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
@@ -30,7 +33,7 @@ export class CatsController {
   }
 
   @Post()
-  async create(@Res() res: Response, @Body() cat: { id: number; name: string }) {
+  async create(@Res() res: Response, @Body() cat: { id: string; name: string }) {
     const data = await this.catsService.create(cat);
     if (data) {
       res.status(HttpStatus.CREATED).json({
@@ -44,7 +47,7 @@ export class CatsController {
   }
 
   @Get(':id')
-  async findOne(@Res() res: Response, @Param('id') id: number) {
+  async findOne(@Res() res: Response, @Param('id') id: string) {
     const data = await this.catsService.findOne(id);
     if (data) {
       res.status(HttpStatus.OK).json({
@@ -60,8 +63,8 @@ export class CatsController {
   @Patch(':id')
   async update(
     @Res() res: Response,
-    @Param('id') id: number,
-    @Body() cat: { id: number; name: string },
+    @Param('id') id: string,
+    @Body() cat: { id: string; name: string },
   ) {
     const data = await this.catsService.update(id, cat);
     if (data) {
@@ -76,7 +79,7 @@ export class CatsController {
   }
 
   @Delete(':id')
-  async delete(@Res() res: Response, @Param('id') id: number) {
+  async delete(@Res() res: Response, @Param('id') id: string) {
     const data = await this.catsService.delete(id);
     if (data) {
       res.status(HttpStatus.OK).json({
