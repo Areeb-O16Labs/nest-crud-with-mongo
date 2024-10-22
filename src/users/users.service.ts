@@ -77,23 +77,6 @@ export class UsersService {
     }
   }
 
-  async login(email: string, password: string) {
-    try{
-      const user = await this.existingUserBy('email', email);
-      if (user) {
-        // check password
-        const match = await checkPassword(password, user.password);
-        if (match) {
-          return customResponseHandler(user, 'User logged in successfully');
-        }
-        throw new InternalServerErrorException('Invalid Password!');
-      }
-      throw new InternalServerErrorException('Invalid Email!');
-    }catch(err){
-      throw new InternalServerErrorException(err.message);
-    }
-  }
-
   async existingUserBy(key: string, value: string): Promise<User> {
     return await this.userModel.findOne({
       where: { [key]: value },

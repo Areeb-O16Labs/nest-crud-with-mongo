@@ -22,15 +22,3 @@ export class CreateUserDto {
     password: string;
 }
 
-export class loginDto {
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsEmail()
-  email: string;
-
-  @ApiProperty({ required: true })
-  @IsNotEmpty()
-  @IsString()
-  password: string;
-}
-
