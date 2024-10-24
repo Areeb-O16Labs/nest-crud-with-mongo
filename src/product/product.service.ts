@@ -10,22 +10,35 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class ProductService {
   constructor(
     @InjectRepository(Product)
-    private readonly ProductService: Repository<Product>,
-  ){}
+    private readonly ProductModel: Repository<Product>,
+  ) {}
   async create(createProductDto: CreateProductDto) {
     try {
-      
-      let user; 
-      // user = await this.ProductService.create();
+      let product = new Product();
+      product.productName = createProductDto.productName;
+      product.category = createProductDto.category as any;
+      await this.ProductModel.save(product);
       // const Product = new Product();
-      // return customResponseHandler(user, 'Category created successfully');
+      return customResponseHandler(product, 'Product created successfully');
     } catch (err) {
       throw new InternalServerErrorException(err.message);
     }
   }
 
-  findAll() {
-    return `This action returns all product`;
+  async findAll() {
+    try {
+      const users = await this.ProductModel.createQueryBuilder('product')
+        .leftJoinAndSelect('product.category', 'category')
+        .getMany();
+      return customResponseHandler(
+        users,
+        'All products retrieved successfully',
+      );
+    } catch (err) {
+      console.log(err, 'err');
+
+      throw new InternalServerErrorException(err.message);
+    }
   }
 
   findOne(id: string) {

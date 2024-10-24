@@ -11,5 +11,6 @@ import { Category } from 'src/category/entities/category.entity';
   ],
   controllers: [ProductController],
   providers: [ProductService],
+  exports: [TypeOrmModule, ProductService]
 })
 export class ProductModule {}
